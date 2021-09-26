@@ -1,0 +1,13 @@
+module top_module (
+    input a, b, c, d, e,
+    output [24:0] out );//
+    wire [4:0]w;
+     
+    assign w={a,b,c,d,e};
+    assign out[4:0]=({e,e,e,e,e}~^w);
+    assign out[9:5]=({d,d,d,d,d}~^w);
+    assign out[14:10]=({c,c,c,c,c}~^w);
+    assign out[19:15]=({b,b,b,b,b}~^w);
+    assign out[24:20]=({a,a,a,a,a}~^w);
+
+endmodule
