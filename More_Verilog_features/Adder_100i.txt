@@ -1,0 +1,24 @@
+module FA(A,B,Cin,Sum,Cout);
+    input A,B,Cin;
+    output Sum,Cout;
+    assign Sum=A^B^Cin;
+    assign Cout=(A&B)|((A^B)&Cin);
+endmodule
+
+module top_module( 
+    input [99:0] a, b,
+    input cin,
+    output [99:0] cout,
+    output [99:0] sum );
+    //wire [99:0]cout;
+    genvar i;
+    generate
+        for(i=0;i<100;i++)
+            begin: loop1
+                if(i==0)
+            FA x(a[0],b[0],cin,sum[0],cout[0]);
+                else
+            FA x(a[i],b[i],cout[i-1],sum[i],cout[i]);
+        end
+    endgenerate
+endmodule
