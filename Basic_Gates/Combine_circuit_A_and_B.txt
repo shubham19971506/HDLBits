@@ -1,0 +1,24 @@
+module top_moduleA (input x, input y, output z);
+    assign z=(x^y)&x;
+
+endmodule
+
+module top_moduleB ( input x, input y, output z );
+    xnor x1(z,x,y);
+endmodule
+
+module top_module (input x, input y, output z);
+    wire w1,w2,w3,w4,w5,w6;
+    
+    top_moduleA f1(x,y,w1);
+    top_moduleA f2(x,y,w3);
+    
+    top_moduleB f3(x,y,w2);
+    top_moduleB f4(x,y,w4);
+    
+    or x1(w5,w1,w2);
+    and x2(w6,w3,w4);
+    xor x3(z,w5,w6);
+    
+
+endmodule
