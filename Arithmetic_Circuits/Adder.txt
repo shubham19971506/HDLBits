@@ -1,0 +1,18 @@
+module top_module (
+    input [3:0] x,
+    input [3:0] y, 
+    output [4:0] sum);
+    //wire cin;
+    wire [3:0]cout;
+    FA F1(x[0],y[0],1'b0,sum[0],cout[0]);
+    FA F2(x[1],y[1],cout[0],sum[1],cout[1]);
+    FA F3(x[2],y[2],cout[1],sum[2],cout[2]);
+    FA F4(x[3],y[3],cout[2],sum[3],sum[4]);
+endmodule
+
+module FA(a,b,c,sum,cout);
+    input a,b,c;
+    output sum,cout;
+    assign sum=a^b^c;
+    assign cout=(a^b)&c|a&b;
+endmodule

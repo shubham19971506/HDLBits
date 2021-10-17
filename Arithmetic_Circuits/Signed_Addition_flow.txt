@@ -1,0 +1,38 @@
+module top_module (
+    input [7:0] a,
+    input [7:0] b,
+    output [7:0] s,
+    output overflow
+); //
+    wire [8:0]w;
+    //Both methods can be used to solve
+    /*
+    FA F1(a[0],b[0],1'b0,s[0],w[0]);
+    FA F2(a[1],b[1],w[0],s[1],w[1]);
+    FA F3(a[2],b[2],w[1],s[2],w[2]);
+    FA F4(a[3],b[3],w[2],s[3],w[3]);
+    FA F5(a[4],b[4],w[3],s[4],w[4]);
+    FA F6(a[5],b[5],w[4],s[5],w[5]);
+    FA F7(a[6],b[6],w[5],s[6],w[6]);
+    FA F8(a[7],b[7],w[6],s[7],w[7]);
+    assign overflow=w[6]^w[7];
+    */
+    genvar i;
+    generate
+        for(i=0;i<8;i++)
+            begin: FA
+                FA F(a[i],b[i],w[i],s[i],w[i+1]);
+            end
+        assign overflow=w[8]^w[7];
+    endgenerate
+  
+
+endmodule
+
+
+module FA(a,b,cin,sum,cout);
+    input a,b,cin;
+    output sum,cout;
+    assign sum=a^b^cin;
+    assign cout=(a&b)|(cin&(a^b));
+endmodule
